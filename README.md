@@ -1,5 +1,6 @@
 # online-learning-lean
 
+[![thread](https://img.shields.io/badge/%F0%9F%A7%B5-how%20it%20works-1DA1F2)](https://x.com/thevelvetmonke)
 [![Lean 4](https://img.shields.io/badge/Lean-4.28.0-blue)](https://lean-lang.org/)
 [![Mathlib](https://img.shields.io/badge/Mathlib-v4.28.0-purple)](https://github.com/leanprover-community/mathlib4)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -12,7 +13,15 @@ Lean 4 formal proofs for Follow-the-Regularised-Leader (FTRL) in online convex o
 
 **Zero sorry statements.** Standard axioms only (`propext`, `Classical.choice`, `Quot.sound`).
 
-## Why it matters
+## What this is, and why it matters
+
+This library formalizes a Bregman-divergence regret analysis for Follow-the-Regularised-Leader style updates. Its headline theorem, `ftrl_convergence`, proves the O(sqrt(K)) bound `G*sqrt(2*D0*K)` for the library's linearized regret at the balanced learning rate.
+
+The argument splits each regret term into stability and approximation pieces. The update optimality condition and Bregman three-point identity make the approximation terms telescope, while strong convexity and a completed square control stability. A uniform subgradient bound and the selected learning rate produce the final expression.
+
+The formal regret is `sum <g_k, x_k-u>`, not a direct sum of loss differences. The setup supplies the iterates, their feasibility, the regularizer data, and the first-order update condition. The library does not construct the optimizer at each round or verify an implementation, and a loss-regret conclusion needs the usual subgradient link for the chosen losses.
+
+## Background and motivation
 
 Online convex optimisation studies repeated decision-making under adversarially chosen convex losses. At each round, the learner chooses a point in a convex constraint set, observes a loss, and is measured by regret against a fixed comparator.
 
